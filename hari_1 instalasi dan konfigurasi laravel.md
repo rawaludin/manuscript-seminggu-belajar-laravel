@@ -3,7 +3,8 @@
 Laravel sangat mudah dikonfigurasi untuk mengembangkan sebuah aplikasi. Pada bagian ini akan saya jelaskan apa saja yang harus dipersiapkan untuk memulai menggunakan framework Laravel. Untuk memudahkan pemahaman, saya tidak akan menjelaskan beberapa istilah secara rinci.
 
 ## Kebutuhan Sistem
-Laravel mendukung penggunaan web server apache dan ngix. Pada buku ini, saya menggunakan web server Apache. Pastikan PHP yang Anda gunakan sudah versi 5.3.7 keatas. Saya sendiri menggunakan [MAMP](www.mamp.info) untuk OSX, jika Anda pengguna windows bisa menggunakan [XAMPP](www.apachefriends.org).
+Laravel mendukung penggunaa
+n web server apache dan ngix. Pada buku ini, saya menggunakan web server Apache. Pastikan PHP yang Anda gunakan sudah versi 5.3.7 keatas. Saya sendiri menggunakan [MAMP](www.mamp.info) untuk OSX, jika Anda pengguna windows bisa menggunakan [XAMPP](www.apachefriends.org).
 
 Untuk database Laravel dapat menggunakan database MySQL, PostgreSQL, SQLServer atau SQLite.
 
@@ -112,9 +113,40 @@ Perintah ini akan menginstall framework laravel dan dependency packagenya.
 
 ![laravel structure](images/laravel-structure.png)
 
+Jika Anda menggunakan OS *nix, instalasi laravel dapat pula dilakukan dengan menggunakan `laravel.phar`, caranya:
+
+1. Download [Laravel phar](http://laravel.com/laravel.phar)
+
+    {linenos=off}
+    ~~~~~~~~
+    $ wget http://laravel.com/laravel.phar
+    ~~~~~~~~
+
+2. Rename file yang telah didownload menjadi `laravel`
+
+    {linenos=off}
+    ~~~~~~~~
+    $ mv laravel.phar laravel
+    ~~~~~~~~
+
+3. Pindahkan file tersebut ke `/usr/local/bin/`:
+
+    {linenos=off}
+    ~~~~~~~~
+    $ sudo mv laravel /usr/local/bin/
+    ~~~~~~~~
+
+4. Untuk membuat project laravel, jalan perintah :
+
+    {linenos=off}
+    ~~~~~~~~
+    $ laravel new webapp
+    ~~~~~~~~
+
 ## Konfigurasi
 Setelah Laravel terinstall pastikan folder app/storage dapat diakses oleh web server. Cara sederhananya, jalankan perintah ini:
 
+{linenos=off}
 ~~~~~~~~
 $ sudo chmod -R 777 app/storage
 ~~~~~~~~
@@ -127,6 +159,7 @@ Web yang dikembangkan dengan Laravel dapat diakses menggunakan PHP builtin web s
 ### PHP builtin web server
 Jalankan perintah berikut di folder webapp:
 
+{linenos=off}
 ~~~~~~~~
 $ php artisan serve
 ~~~~~~~~
@@ -150,51 +183,62 @@ Menggunakan virtual host, aplikasi dapat diakses dengan url seperti http://webap
 1. Buka file `hosts` yang ada di alamat  `C:\WINDOWS\system32\drivers\etc\hosts`
 2. Di bagian paling bawah tambahkan alamat IP Address localhost 127.0.0.1  dan nama domain yang dibuat misalnya webapp.site
 
-{title="C:\WINDOWS\system32\drivers\etc\hosts", lineos=on}
-~~~~~~~~
-....
-127.0.0.1    webapp.site
-....
-~~~~~~~~
+    {title="C:\WINDOWS\system32\drivers\etc\hosts", linenos=on}
+    ~~~~~~~~
+    ....
+    127.0.0.1    webapp.site
+    ....
+    ~~~~~~~~
 
 3. Buka file `httpd.conf` yang ada di alamat `C:\xampp\apache\conf\httpd.conf`
+
 4. Cari bagian `Directory`, jika aplikasi kita berada di `C:/xampp/htdocs/webapp` isi seperti ini
 
-{title="C:\xampp\apache\conf\httpd.conf", lineos=on}
-~~~~~~~~
-<Directory "C:/xampp/htdocs/webapp/public">
-  Options Indexes FollowSymLinks Includes ExecCGI
-  AllowOverride All
-  Order allow,deny
-  Allow from all
-  Require all granted
-</Directory>
-~~~~~~~~
+    {title="C:\xampp\apache\conf\httpd.conf", linenos=on}
+    ~~~~~~~~
+    <Directory "C:/xampp/htdocs/webapp/public">
+      Options Indexes FollowSymLinks Includes ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+    </Directory>
+    ~~~~~~~~
 
 5. Buka file `httpd-vhosts.conf`  yang ada di alamat `C:\xampp\apache\conf\extra`
+
 6. Tambahkan setingan di bawah ini untuk membedakan website yang dipanggil dengan localhost dan website yang dipanggil dengan virtual host
 
-{title="C:\xampp\apache\conf\extra\httpd-vhosts.conf", lineos=on}
-~~~~~~~~
-NameVirtualHost *:80
+    {title="C:\xampp\apache\conf\extra\httpd-vhosts.conf", lineos=on}
+    ~~~~~~~~
+    NameVirtualHost *:80
 
-#VirtualHost untuk webapp.site
+    #VirtualHost untuk webapp.site
 
-<VirtualHost *:80>
-  DocumentRoot C:/xampp/htdocs/webapp/public
-  ServerName webapp.site
-</VirtualHost>
+    <VirtualHost *:80>
+      DocumentRoot C:/xampp/htdocs/webapp/public
+      ServerName webapp.site
+    </VirtualHost>
 
-#Untuk localhost yang biasa
+    #Untuk localhost yang biasa
 
-<VirtualHost *:80>
-  DocumentRoot C:/xampp/htdocs
-  ServerName localhost
-</VirtualHost>
-~~~~~~~~
+    <VirtualHost *:80>
+      DocumentRoot C:/xampp/htdocs
+      ServerName localhost
+    </VirtualHost>
+    ~~~~~~~~
 
 7. Restart Apache pada XAMPP Control Panel dengan klik tombol **stop** kemudian klik tombol **start**.
 
 Setelah berhasil, Anda dapat mengakses aplikasi di http://webapp.site.
 
 ![Berhasil setup virtualhost](images/vhost-webapp.png)
+
+## Ringkasan
+Pada hari 1 ini, saya harap Anda telah dapat memahami:
+
+  * Penggunaan composer untuk development php modern
+  * Instalasi laravel
+  * Konfigurasi virtualhost
+
+Pada hari 2 kita akan mempelajari konsep Routing dan MVC pada Laravel. Semangat! :)
